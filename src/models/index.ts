@@ -5,7 +5,8 @@ const models = [home];
 
 console.log()
 export type RootState = {
-    home:typeof home.state;
+    home:typeof home.state,
+    loading:DvaLoadingState,
 }
 
 export default models;

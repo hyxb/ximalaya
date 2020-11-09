@@ -1,14 +1,26 @@
 import React from 'react';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import {View, Text} from 'react-native';
+import {
+  createMaterialTopTabNavigator,
+  MaterialTopTabBarProps,
+  MaterialTopTabBar,
+} from '@react-navigation/material-top-tabs';
 import Home from '@/pages/Home';
 
 const Tab = createMaterialTopTabNavigator();
 
 class HomeTabs extends React.Component {
+  renderTabBar = (props: MaterialTopTabBarProps) => {
+    return (
+   
+    );
+  };
+
   render() {
     return (
       <Tab.Navigator
         lazy={true}
+        tabBar={this.renderTabBar}
         tabBarOptions={{
           scrollEnabled: true, //滚动标签栏
           tabStyle: {

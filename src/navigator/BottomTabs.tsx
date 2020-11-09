@@ -47,10 +47,10 @@ interface IProps {
 }
 
 //获取title的方法
-function getHeaderTitle(route: Route) {
-  const routeName = route.state
-    ? route.state.routes[route.state.index].name
-    : route.params?.screen || 'HomeTabs';
+function getHeaderTitle(routeName: string) {
+  // const routeName = route.state
+  //   ? route.state.routes[route.state.index].name
+  //   : route.params?.screen || 'HomeTabs';
   console.log('routeName:' + routeName);
   switch (routeName) {
     case 'HomeTabs':
@@ -67,12 +67,31 @@ function getHeaderTitle(route: Route) {
 }
 
 class BottomTabs extends React.Component<IProps> {
+  componentDidMount() {
+    this.setOption();
+  }
   componentDidUpdate() {
+    this.setOption();
+  }
+  setOption = () => {
     const {navigation, route} = this.props;
-    navigation.setOptions({
-      // headerTitle:getHeaderTitle(route),
-      headerTitle: getHeaderTitle(route),
-    });
+    const routeName = route.state
+    ? route.state.routes[route.state.index].name
+    : route.params?.screen || 'HomeTabs';
+
+    if(routeName === 'HomeTabs') {
+      navigation.setOptions({
+        // headerTitle:getHeaderTitle(route),
+        headerTitle: '',
+        headerTransparent:true
+      });
+    } else {
+      navigation.setOptions({
+        // headerTitle:getHeaderTitle(route),
+        headerTitle: getHeaderTitle(routeName),
+        headerTransparent:false
+      });
+    }
   }
 
   render() {

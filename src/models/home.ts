@@ -34,11 +34,20 @@ export interface IChannel {
     playing: number;
 }
 
+export interface IPagination {
+    current: number,
+    total: number,
+    hasMore: boolean,
+}
+
 export interface HomeState {
     carousels: ICarousel[],
     guess: IGuess[],
     channels: IChannel[],
+    pagination: IPagination[],
 }
+
+
 
 interface HomeModel extends Model {
     namespace: 'home';
@@ -58,6 +67,11 @@ const initiaState: HomeState = {
     carousels: [],
     guess: [],
     channels: [],
+    pagination: [{
+        current: 1,
+        total: 0,
+        hasMore: true,
+    }]
 }
 
 const homeModel: HomeModel = {
@@ -71,6 +85,7 @@ const homeModel: HomeModel = {
             }
         },
     },
+
     effects: {
         *fetchCarousels(_, { call, put }) {
             const { data } = yield call(axios.get, CAROUSEL_URL);
@@ -94,18 +109,41 @@ const homeModel: HomeModel = {
         },
 
         *fetchChannel({ callback, payload }, { call, put, select }) {
-            const { channels } = yield select((state: RootState) => state.home)
-            const { data } = yield call(axios.get, CHANNEL_URL);
+            const { channels, pagination } = yield select((state: RootState) => state.home)
+            let page = 1;
+
+            if (payload && payload.loadMore) {
+                page = pagination.current + 1;
+            }
+
+
+            const { data } = yield call(axios.get, CHANNEL_URL, {
+                params: {
+                    page,
+                }
+            });
             let newChannels = data.results;
             if (payload && payload.loadMore) {
                 newChannels = channels.concat(newChannels);
+
             }
+
             yield put({
                 type: 'setState',
                 payload: {
                     channels: newChannels,
+                    pagination: {
+                        current: data.pagination.total,
+                        total: data.pagination.total,
+                        hasMore: newChannels.length < data.pagination.total,
+                    }
                 }
             })
+
+            if (typeof callback === 'function') {
+                console.log('this is Models CallBack!');
+                callback();
+            }
         }
     },
 };
