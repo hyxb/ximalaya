@@ -6,7 +6,10 @@ import SnapCarousel, {
   Pagination,
   ParallaxImage,
 } from 'react-native-snap-carousel';
-import {ICarousel} from '@/models/home'
+import {ICarousel} from '@/models/home';
+import {connect, ConnectedProps} from 'react-redux';
+// import { RootStackNavigation } from '@/navigator/index';
+import {RootState} from '@/models/index';
 
 const sliderWidth = viewportWidth;
 const sidewidth = wp(90);
@@ -15,9 +18,19 @@ const itemWidth = sidewidth + wp(2) * 2;
 const sliderHeight = viewportHeight;
 const sideHeight = hp(30);
 
-interface IProps {
-  data: ICarousel[],
-}
+const mapStateToProps = ({home}: RootState) => {
+  // console.log("Carousel log",home.carousels.length);
+  return {
+    data: home.carousels,
+    activeCarouseIndex: home.activeCarouseIndex,
+  };
+};
+
+const connector = connect(mapStateToProps);
+
+type MadelState = ConnectedProps<typeof connector>;
+
+interface IProps extends MadelState {}
 
 class Carousel extends React.Component<IProps> {
   state = {
@@ -25,8 +38,13 @@ class Carousel extends React.Component<IProps> {
   };
 
   onSnapToItem = (index: number) => {
-    this.setState({
-      activeSlide: index,
+  
+    const {dispatch} = this.props;
+    dispatch({
+      type: 'home/setState',
+      payload: {
+        activeCarouseIndex: index,
+      },
     });
   };
 
@@ -48,15 +66,14 @@ class Carousel extends React.Component<IProps> {
   };
 
   get pagination() {
-    const {data} = this.props;
-    const {activeSlide} = this.state;
+    const {data, activeCarouseIndex} = this.props;
     return (
       <View style={styles.paginationWrapper}>
         <Pagination
           containerStyle={styles.paginationContainer}
           dotsLength={data.length}
           inactiveDotScale={0.8}
-          activeDotIndex={activeSlide}
+          activeDotIndex={activeCarouseIndex}
           dotContainerStyle={styles.dotContainer}
           dotStyle={styles.dot}
         />
@@ -66,7 +83,6 @@ class Carousel extends React.Component<IProps> {
 
   render() {
     const {data} = this.props;
-
     return (
       <View>
         <SnapCarousel
@@ -117,4 +133,4 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.92)',
   },
 });
-export default Carousel;
+export default connector(Carousel);

@@ -1,5 +1,6 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
+import TopTabBarWrapper from '@/pages/views/TopTabBarWrapper';
 import {
   createMaterialTopTabNavigator,
   MaterialTopTabBarProps,
@@ -10,10 +11,9 @@ import Home from '@/pages/Home';
 const Tab = createMaterialTopTabNavigator();
 
 class HomeTabs extends React.Component {
+
   renderTabBar = (props: MaterialTopTabBarProps) => {
-    return (
-   
-    );
+    return <TopTabBarWrapper {...props}/>;
   };
 
   render() {
@@ -21,6 +21,7 @@ class HomeTabs extends React.Component {
       <Tab.Navigator
         lazy={true}
         tabBar={this.renderTabBar}
+        sceneContainerStyle={styles.sceneContainerStyle}
         tabBarOptions={{
           scrollEnabled: true, //滚动标签栏
           tabStyle: {
@@ -41,6 +42,8 @@ class HomeTabs extends React.Component {
           component={Home}
           options={{tabBarLabel: '推荐'}}
         />
+      <Tab.Screen name="home1" component={Home} options={{ tabBarLabel:'推荐'}}/>
+      
         {/* <Tab.Screen name="home1" component={Home} options={{ tabBarLabel:'推荐'}}/>
                 <Tab.Screen name="home2" component={Home} options={{ tabBarLabel:'推荐'}}/>
                 <Tab.Screen name="home3" component={Home} options={{ tabBarLabel:'推荐'}}/> */}
@@ -48,5 +51,9 @@ class HomeTabs extends React.Component {
     );
   }
 }
+
+const styles=StyleSheet.create({
+  sceneContainerStyle:{backgroundColor:'transparent'}
+})
 
 export default HomeTabs;

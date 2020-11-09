@@ -16,12 +16,7 @@ import Guess from './Guess';
 import Config from 'react-native-config';
 import ChannelItem from './ChannelItem';
 import {IChannel} from '@/models/home';
-// import { ScrollView } from 'react-native-gesture-handler';
-// import Carousel from 'react-native-snap-carousel';
-// import Carousel from 'react-native-snap-carousel';
 
-// import ConnectedProps from 'index'
-// import { NavigationContainer } from '@react-navigation/native';
 
 //BUG Config.API_URL is  undefined  ???
 console.log('CONFIG : ' + Config.API_URL);
@@ -30,8 +25,8 @@ const mapStateToProps = ({home, loading}: RootState) => {
   return {
     carousels: home.carousels,
     channels: home.channels,
-    loading: loading.effects['home/fetchChannel'],
     hasMore: home.pagination.hasMore,
+    loading: loading.effects['home/fetchChannel'],
   };
 };
 
@@ -112,10 +107,10 @@ class Home extends React.Component<IProps, IState> {
   };
 
   get header() {
-    const {carousels} = this.props;
+    // const {carousels} = this.props;
     return (
       <View>
-        <Carousel data={carousels} />
+        <Carousel/>
         <Guess />
       </View>
     );
@@ -141,15 +136,14 @@ class Home extends React.Component<IProps, IState> {
   }
 
   get empty() {
-    const {loading} = this.props; 
-    if(loading) return;
+    const {loading} = this.props;
+    if (loading) return;
 
     return (
       <View style={styles.empty}>
         <Text style={styles.bottomFont}>暂无数据</Text>
       </View>
-    )
-
+    );
   }
 
   render() {
@@ -181,8 +175,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 10,
   },
-  bottomFont:{
-    color:'#7e7474',
+  bottomFont: {
+    color: '#7e7474',
   },
   empty: {
     alignItems: 'center',

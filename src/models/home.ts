@@ -42,11 +42,11 @@ export interface IPagination {
 
 export interface HomeState {
     carousels: ICarousel[],
+    activeCarouseIndex:number; //当前轮播图的标
     guess: IGuess[],
     channels: IChannel[],
     pagination: IPagination[],
 }
-
 
 
 interface HomeModel extends Model {
@@ -65,6 +65,7 @@ interface HomeModel extends Model {
 
 const initiaState: HomeState = {
     carousels: [],
+    activeCarouseIndex:0,
     guess: [],
     channels: [],
     pagination: [{
@@ -89,7 +90,7 @@ const homeModel: HomeModel = {
     effects: {
         *fetchCarousels(_, { call, put }) {
             const { data } = yield call(axios.get, CAROUSEL_URL);
-            console.log('runbotushuju', data);
+            console.log('轮播图数据', data);
             yield put({
                 type: 'setState',
                 payload: {

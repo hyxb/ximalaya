@@ -20,7 +20,7 @@ import index, {
 // import {CompositeNavigationProp} from '@react-navigation/native';
 // import {HeaderTitle, StackNavigationProp} from '@react-navigation/stack';
 import IconFont from '../iconfont/index';
-import HomeTabs from '@/navigator/HomeTabs'
+import HomeTabs from '@/navigator/HomeTabs';
 //路由列表类型
 export type BottomTabParamList = {
   HomeTabs: undefined;
@@ -62,7 +62,7 @@ function getHeaderTitle(routeName: string) {
     case 'Account':
       return '账户';
     default:
-      return '首页';
+      return '';
   }
 }
 
@@ -73,26 +73,27 @@ class BottomTabs extends React.Component<IProps> {
   componentDidUpdate() {
     this.setOption();
   }
+
   setOption = () => {
     const {navigation, route} = this.props;
     const routeName = route.state
-    ? route.state.routes[route.state.index].name
-    : route.params?.screen || 'HomeTabs';
+      ? route.state.routes[route.state.index].name
+      : route.params?.screen || 'HomeTabs';
 
-    if(routeName === 'HomeTabs') {
+    if (routeName === 'HomeTabs') {
       navigation.setOptions({
         // headerTitle:getHeaderTitle(route),
+        headerTransparent: true,
         headerTitle: '',
-        headerTransparent:true
       });
     } else {
       navigation.setOptions({
         // headerTitle:getHeaderTitle(route),
+        headerTransparent: false,
         headerTitle: getHeaderTitle(routeName),
-        headerTransparent:false
       });
     }
-  }
+  };
 
   render() {
     return (
@@ -101,14 +102,17 @@ class BottomTabs extends React.Component<IProps> {
           activeTintColor: '#f86442',
         }}>
         <Tab.Screen
-          name={'Test'}
+          name={'HomeTabs'}
           component={HomeTabs}
           options={{
             tabBarLabel: '首页',
             tabBarIcon: ({color, size}) => (
-              <IconFont name="icon-31shouyexuanzhong" size={size} color={color} />
+              <IconFont
+                name="icon-31shouyexuanzhong"
+                size={size}
+                color={color}
+              />
             ),
-          
           }}
         />
         <Tab.Screen
@@ -117,7 +121,11 @@ class BottomTabs extends React.Component<IProps> {
           options={{
             tabBarLabel: '我听',
             tabBarIcon: ({color, size}) => (
-              <IconFont name="icon-31shoucangxuanzhong" size={size} color={color} />
+              <IconFont
+                name="icon-31shoucangxuanzhong"
+                size={size}
+                color={color}
+              />
             ),
           }}
         />
