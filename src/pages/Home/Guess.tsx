@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     paddingLeft: 8,
     paddingRight: 8,
-    elevation: 2,
+    elevation: 0,
   },
   images: {
     height: 100,

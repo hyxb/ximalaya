@@ -7,16 +7,17 @@ import {
   FlatList,
   ListRenderItemInfo,
   StyleSheet,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
 } from 'react-native';
 import {RootStackNavigation} from '@/navigator/index';
 import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from '@/models/index';
-import Carousel from '@/pages/Home/Carousel';
+import Carousel, {sideHeight} from '@/pages/Home/Carousel';
 import Guess from './Guess';
 import Config from 'react-native-config';
 import ChannelItem from './ChannelItem';
 import {IChannel} from '@/models/home';
-
 
 //BUG Config.API_URL is  undefined  ???
 console.log('CONFIG : ' + Config.API_URL);
@@ -27,6 +28,7 @@ const mapStateToProps = ({home, loading}: RootState) => {
     channels: home.channels,
     hasMore: home.pagination.hasMore,
     loading: loading.effects['home/fetchChannel'],
+    gradientVisible: home.gradientVisible,
   };
 };
 
@@ -106,12 +108,28 @@ class Home extends React.Component<IProps, IState> {
     });
   };
 
+  onScroll = ({nativeEvent}: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const offsetY = nativeEvent.contentOffset.y;
+    let newGradientVisible = offsetY < sideHeight;
+    const {dispatch, gradientVisible} = this.props;
+    if (gradientVisible !== newGradientVisible) {
+      dispatch({
+        type: 'home/setState',
+        payload: {
+          gradientVisible: newGradientVisible,
+        },
+      });
+    }
+  };
+
   get header() {
     // const {carousels} = this.props;
     return (
       <View>
-        <Carousel/>
-        <Guess />
+        <Carousel />
+        <View style={styles.background}>
+          <Guess />
+        </View>
       </View>
     );
   }
@@ -161,6 +179,7 @@ class Home extends React.Component<IProps, IState> {
         refreshing={refreshing}
         onEndReached={this.onEndReached}
         onEndReachedThreshold={0.5}
+        onScroll={this.onScroll}
       />
     );
   }
@@ -181,6 +200,9 @@ const styles = StyleSheet.create({
   empty: {
     alignItems: 'center',
     padding: 100,
+  },
+  background: {
+    backgroundColor: '#fff',
   },
 });
 export default connector(Home);

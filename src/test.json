@@ -1,0 +1,180 @@
+{
+    "status": 100,
+    "msg": "success",
+    "data": [
+        {
+            "id": "1",
+            "name": "小说",
+            "classify": "推荐"
+        },
+        {
+            "id": "2",
+            "name": "大说",
+            "classify": "推荐"
+        },
+        {
+            "id": "3",
+            "name": "直播",
+            "classify": "推荐"
+        },
+        {
+            "id": "4",
+            "name": "广播",
+            "classify": "推荐"
+        },
+        {
+            "id": "5",
+            "name": "儿童",
+            "classify": "推荐"
+        },
+        {
+            "id": "6",
+            "name": "精品",
+            "classify": "推荐"
+        },
+        {
+            "id": "7",
+            "name": "畅销书",
+            "classify": "推荐"
+        },
+        {
+            "id": "8",
+            "name": "武汉",
+            "classify": "推荐"
+        },
+        {
+            "id": "9",
+            "name": "测试",
+            "classify": "推荐"
+        },
+        {
+            "id": "10",
+            "name": "开发",
+            "classify": "推荐"
+        },
+        {
+            "id": "11",
+            "name": "开学季",
+            "classify": "推荐"
+        },
+        {
+            "id": "12",
+            "name": "历史",
+            "classify": "知识"
+        },
+        {
+            "id": "13",
+            "name": "财经",
+            "classify": "知识"
+        },
+        {
+            "id": "14",
+            "name": "小语种",
+            "classify": "知识"
+        },
+        {
+            "id": "15",
+            "name": "物理",
+            "classify": "知识"
+        },
+        {
+            "id": "16",
+            "name": "钓鱼",
+            "classify": "娱乐"
+        },
+        {
+            "id": "18",
+            "name": "游戏",
+            "classify": "娱乐"
+        },
+        {
+            "id": "19",
+            "name": "电竞",
+            "classify": "娱乐"
+        },
+        {
+            "id": "20",
+            "name": "音乐",
+            "classify": "娱乐"
+        },
+        {
+            "id": "21",
+            "name": "羽毛球",
+            "classify": "体育"
+        },
+        {
+            "id": "22",
+            "name": "排球",
+            "classify": "体育"
+        },
+        {
+            "id": "23",
+            "name": "乒乓球",
+            "classify": "体育"
+        },
+        {
+            "id": "24",
+            "name": "篮球",
+            "classify": "体育"
+        },
+        {
+            "id": "25",
+            "name": "网球",
+            "classify": "体育"
+        },
+        {
+            "id": "26",
+            "name": "LOL",
+            "classify": "电竞"
+        },
+        {
+            "id": "27",
+            "name": "FPX",
+            "classify": "电竞"
+        },
+        {
+            "id": "28",
+            "name": "IG",
+            "classify": "电竞"
+        },
+        {
+            "id": "29",
+            "name": "SN",
+            "classify": "电竞"
+        },
+        {
+            "id": "30",
+            "name": "JPJ",
+            "classify": "电竞"
+        },
+        {
+            "id": "31",
+            "name": "WE",
+            "classify": "电竞"
+        },
+        {
+            "id": "37",
+            "name": "DS",
+            "classify": "电竞"
+        },     {
+            "id": "32",
+            "name": "COD",
+            "classify": "电竞"
+        },
+        {
+            "id": "33",
+            "name": "WF3",
+            "classify": "电竞"
+        },
+        {
+            "id": "34",
+            "name": "PUBG",
+            "classify": "电竞"
+        },
+        {
+            "id": "35",
+            "name": "WOW",
+            "classify": "电竞"
+        }
+    ]
+}

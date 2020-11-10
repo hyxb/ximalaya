@@ -46,6 +46,7 @@ export interface HomeState {
     guess: IGuess[],
     channels: IChannel[],
     pagination: IPagination[],
+    gradientVisible:boolean,
 }
 
 
@@ -72,7 +73,8 @@ const initiaState: HomeState = {
         current: 1,
         total: 0,
         hasMore: true,
-    }]
+    }],
+    gradientVisible:true,
 }
 
 const homeModel: HomeModel = {

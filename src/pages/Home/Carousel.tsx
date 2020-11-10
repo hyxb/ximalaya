@@ -16,7 +16,7 @@ const sidewidth = wp(90);
 const itemWidth = sidewidth + wp(2) * 2;
 
 const sliderHeight = viewportHeight;
-const sideHeight = hp(30);
+export const sideHeight = hp(30);
 
 const mapStateToProps = ({home}: RootState) => {
   // console.log("Carousel log",home.carousels.length);
@@ -38,7 +38,6 @@ class Carousel extends React.Component<IProps> {
   };
 
   onSnapToItem = (index: number) => {
-  
     const {dispatch} = this.props;
     dispatch({
       type: 'home/setState',
