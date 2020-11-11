@@ -15,6 +15,7 @@ export interface ICategory {
 interface CategoryModelState {
     myCategorys: ICategory[];
     categorys: ICategory[];
+    IsEdit: boolean;
 }
 
 
@@ -24,7 +25,7 @@ interface CategoryModel extends Model {
     state: CategoryModelState,
     effects: {
         loadData: Effect;
-
+        toggle: Effect;
     };
     reducers: {
         setState: Reducer<CategoryModelState>;
@@ -44,6 +45,7 @@ const initiaState = {
         },
     ],
     categorys: [],
+    IsEdit: false,
 }
 
 const categoryModel: CategoryModel = {

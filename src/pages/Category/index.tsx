@@ -7,6 +7,8 @@ import {connect, ConnectedProps} from 'react-redux';
 import _ from 'lodash';
 import {ScrollView} from 'react-native-gesture-handler';
 import Item from '@/pages/Category/item';
+import {RootStackNavigation} from '@/navigator/index';
+import HeaderRightBtn from './HeaderRightBtn';
 
 const mapStateToProps = ({category}: RootState) => {
   return {
@@ -19,7 +21,9 @@ const connector = connect(mapStateToProps);
 
 type ModelState = ConnectedProps<typeof connector>;
 
-interface IProps extends ModelState {}
+interface IProps extends ModelState {
+  navigation: RootStackNavigation;
+}
 
 interface IState {
   myCategorys: ICategory[];
@@ -33,6 +37,15 @@ class Category extends React.Component<IProps> {
     myCategorys: this.props.myCategorys,
   };
 
+  constructor(props: IProps) {
+    super(props);
+    props.navigation.setOptions({
+      headerRight: () => <HeaderRightBtn />,
+    });
+    // props.navigation.setParams({
+    //     title:'编辑'
+    // });
+  }
   renderItem = (item: ICategory, index: number) => {
     return <Item data={item} />;
   };
