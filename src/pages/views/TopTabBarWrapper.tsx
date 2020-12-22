@@ -9,27 +9,23 @@ import Touchable from '@/components/Touchable';
 import LinearGradient from 'react-native-linear-animated-gradient-transition';
 import {RootState} from '@/models/index';
 import {connect, ConnectedProps} from 'react-redux';
+import {getActiveRouteName} from '@/utils/index';
 
-const mapStateToProps = ({home}: RootState) => {
-  console.log('TopTabBarWrapper log', home.carousels);
-  //['#123ded','#ded345']
-  if (home.carousels.length !== 0) {
-    console.log('Carousels is true');
-  } else {
-    console.log('Carousels is false');
-  }
-
+const mapStateToProps = (state: RootState, props: MaterialTopTabBarProps) => {
+  const routeName = getActiveRouteName(props.state);
+  // console.log('routeName :------>', routeName);
+  const modelState = state[routeName];
   /**
    * 判断carousel长度判断是否能取到颜色，否者此处报错undefined
    * true条件一直报错，当第一次状态库没有数据的时候取空报错
    * 无奈只能加个判断不为零
-   * 傻逼bug傻逼bug傻逼bug傻逼bug傻逼bug傻逼bug傻逼bug傻逼bug傻逼bug傻逼bug傻逼bug
+   *
    */
   return {
-    gradientVisible: home.gradientVisible,
+    gradientVisible: modelState.gradientVisible,
     linearColors:
-      home.carousels.length !== 0
-        ? home.carousels[home.activeCarouseIndex].colors
+      modelState.carousels.length !== 0
+        ? modelState.carousels[modelState.activeCarouseIndex].colors
         : undefined,
   };
 };

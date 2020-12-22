@@ -7,16 +7,27 @@ import {IGuess} from '@/models/home';
 import Touchable from '@/components/Touchable';
 import IconFont from '../../iconfont/index';
 
-const mapStateToProps = ({home}: RootState) => {
+// const mapStateToProps = ({home}: RootState) => {
+//   return {
+//     guess: home.guess,
+//   };
+// };
+const mapStateToProps = (state: RootState) => {
+  // const modelState = state
   return {
-    guess: home.guess,
+    state,
   };
 };
 
 const connector = connect(mapStateToProps);
 type ModelState = ConnectedProps<typeof connector>;
 
-class Guess extends React.Component<ModelState> {
+interface IProps extends ModelState {
+  namespace: string;
+  goAlbum: (item: IGuess) => void;
+}
+
+class Guess extends React.Component<IProps> {
   /**
    * 组件加载完成后调用fetch获取数据
    */
@@ -28,18 +39,20 @@ class Guess extends React.Component<ModelState> {
    *调用model的action进行网络数据的获取
    */
   fetch = () => {
-    const {dispatch} = this.props;
+    const {dispatch, namespace, state} = this.props;
+    const modelState = state[namespace];
     dispatch({
-      type: 'home/fetchGuess',
+      type: namespace + '/fetchGuess',
     });
   };
 
   _renderItem = ({item}: {item: IGuess}) => {
+    const {goAlbum} = this.props;
     return (
       <Touchable
         style={styles.items}
         onPress={() => {
-          Alert.alert('111');
+          goAlbum(item);
         }}>
         <Image source={{uri: item.image}} style={styles.images} />
         <Text numberOfLines={2}>{item.title}</Text>
@@ -48,7 +61,8 @@ class Guess extends React.Component<ModelState> {
   };
 
   render() {
-    const {guess} = this.props;
+    const {state, namespace} = this.props;
+    const guess = state[namespace].guess;
     return (
       <View style={styles.container}>
         <View style={styles.header}>

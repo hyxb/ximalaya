@@ -1003,6 +1003,13 @@
   dependencies:
     deep-assign "^3.0.0"
 
+"@react-native-community/blur@^3.6.0":
+  version "3.6.0"
+  resolved "https://registry.npm.taobao.org/@react-native-community/blur/download/@react-native-community/blur-3.6.0.tgz#31c9e0f2770519c9b5c4f99418f192246f0d4db8"
+  integrity sha1-Mcng8ncFGcm1xPmUGPGSJG8NTbg=
+  dependencies:
+    prop-types "^15.5.10"
+
 "@react-native-community/cli-debugger-ui@^4.9.0":
   version "4.9.0"
   resolved "https://registry.npm.taobao.org/@react-native-community/cli-debugger-ui/download/@react-native-community/cli-debugger-ui-4.9.0.tgz#4177764ba69243c97aa26829d59d9501acb2bd71"
@@ -1915,7 +1922,7 @@ babel-preset-jest@^25.5.0:
     babel-plugin-jest-hoist "^25.5.0"
     babel-preset-current-node-syntax "^0.1.2"
 
-babel-runtime@^6.22.0:
+babel-runtime@^6.20.0, babel-runtime@^6.22.0:
   version "6.26.0"
   resolved "https://registry.npm.taobao.org/babel-runtime/download/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
   integrity sha1-llxwWGaOgrVde/4E/yM3vItWR/4=
@@ -2725,6 +2732,13 @@ dva-loading-ts@^3.0.23:
   integrity sha1-KFnA5r5suxHwKIMfAD+zyEVraio=
   dependencies:
     "@babel/runtime" "^7.0.0"
+
+dva-model-extend@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.npm.taobao.org/dva-model-extend/download/dva-model-extend-0.1.2.tgz#a3e615995feaaed5d141eb5b0a26cb98542a9820"
+  integrity sha1-o+YVmV/qrtXRQetbCibLmFQqmCA=
+  dependencies:
+    babel-runtime "^6.20.0"
 
 ecc-jsbn@~0.1.1:
   version "0.1.2"
@@ -6132,7 +6146,7 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.4"
 
-prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.10, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.npm.taobao.org/prop-types/download/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha1-UsQedbjIfnK52TYOAga5ncv/psU=
@@ -6219,6 +6233,11 @@ react-native-config@^1.4.0:
   resolved "https://registry.npm.taobao.org/react-native-config/download/react-native-config-1.4.0.tgz#76e6ba1194a4c23d2e687a0630458238692eec4b"
   integrity sha1-dua6EZSkwj0uaHoGMEWCOGku7Es=
 
+react-native-drag-sort@^2.3.9:
+  version "2.3.9"
+  resolved "https://registry.npm.taobao.org/react-native-drag-sort/download/react-native-drag-sort-2.3.9.tgz#d63e2a15dc78eb8d4779784705072e0b54ef249e"
+  integrity sha1-1j4qFdx4641HeXhHBQcuC1TvJJ4=
+
 react-native-gesture-handler@^1.8.0:
   version "1.8.0"
   resolved "https://registry.npm.taobao.org/react-native-gesture-handler/download/react-native-gesture-handler-1.8.0.tgz#18f61f51da50320f938957b0ee79bc58f47449dc"
@@ -6277,6 +6296,11 @@ react-native-screens@^2.11.0:
   resolved "https://registry.npm.taobao.org/react-native-screens/download/react-native-screens-2.11.0.tgz#34b30b07c2d04aa100cba984b944b303bfa43ea6"
   integrity sha1-NLMLB8LQSqEAy6mEuUSzA7+kPqY=
 
+react-native-slider-x@^0.11.3:
+  version "0.11.3"
+  resolved "https://registry.npm.taobao.org/react-native-slider-x/download/react-native-slider-x-0.11.3.tgz#a1a7561e807c5d38019e9bdffbef2cd2e75ef7e9"
+  integrity sha1-oadWHoB8XTgBnpvf++8s0ude9+k=
+
 react-native-snap-carousel@^3.9.1:
   version "3.9.1"
   resolved "https://registry.npm.taobao.org/react-native-snap-carousel/download/react-native-snap-carousel-3.9.1.tgz#6fd9bd8839546c2c6043a41d2035afbc6fe0443e"
@@ -6284,6 +6308,11 @@ react-native-snap-carousel@^3.9.1:
   dependencies:
     prop-types "^15.6.1"
     react-addons-shallow-compare "15.6.2"
+
+react-native-sound@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.npm.taobao.org/react-native-sound/download/react-native-sound-0.11.0.tgz#ad60b55ba8c6dc89917f381ad3713f2738de530f"
+  integrity sha1-rWC1W6jG3ImRfzga03E/JzjeUw8=
 
 react-native-storage@^1.0.1:
   version "1.0.1"

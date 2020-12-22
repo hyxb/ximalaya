@@ -19,7 +19,6 @@ const sliderHeight = viewportHeight;
 export const sideHeight = hp(30);
 
 const mapStateToProps = ({home}: RootState) => {
-  // console.log("Carousel log",home.carousels.length);
   return {
     data: home.carousels,
     activeCarouseIndex: home.activeCarouseIndex,
@@ -30,7 +29,9 @@ const connector = connect(mapStateToProps);
 
 type MadelState = ConnectedProps<typeof connector>;
 
-interface IProps extends MadelState {}
+interface IProps extends MadelState {
+  namespace:string,
+}
 
 class Carousel extends React.Component<IProps> {
   state = {
@@ -38,9 +39,9 @@ class Carousel extends React.Component<IProps> {
   };
 
   onSnapToItem = (index: number) => {
-    const {dispatch} = this.props;
+    const {dispatch,namespace} = this.props;
     dispatch({
-      type: 'home/setState',
+      type: namespace+'/setState',
       payload: {
         activeCarouseIndex: index,
       },
@@ -82,6 +83,7 @@ class Carousel extends React.Component<IProps> {
 
   render() {
     const {data} = this.props;
+    // console.log(data);
     return (
       <View>
         <SnapCarousel

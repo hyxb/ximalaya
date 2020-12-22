@@ -5,13 +5,16 @@ import Config from "react-native-config";
 import { RootState } from ".";
 
 //轮播图
-const CAROUSEL_URL = '/mock/9203/carousel';
+// const CAROUSEL_URL = '/mock/9203/carousel';
+const CAROUSEL_URL = '/v1/5fd0425960b22ade4c8e061d/carousel';
 
 //猜你喜欢
-const GUESS_URL = '/mock/9203/guess';
+// const GUESS_URL = '/mock/9203/guess';
+const GUESS_URL = '/v1/5fd0425960b22ade4c8e061d/guess';
 
 //首页列表
-const CHANNEL_URL = '/mock/9203/channel';
+// const CHANNEL_URL = '/mock/9203/channel';
+const CHANNEL_URL = '/v1/5fd0425960b22ade4c8e061d/channel'
 
 export interface ICarousel {
     id: string;
@@ -91,8 +94,8 @@ const homeModel: HomeModel = {
 
     effects: {
         *fetchCarousels(_, { call, put }) {
-            const { data } = yield call(axios.get, CAROUSEL_URL);
-            console.log('轮播图数据', data);
+            const {data}= yield call(axios.get, CAROUSEL_URL);
+            // console.log('fetchCarousels is running!',JSON.stringify(data),homeModel.namespace);
             yield put({
                 type: 'setState',
                 payload: {
@@ -102,7 +105,8 @@ const homeModel: HomeModel = {
         },
 
         *fetchGuess(_, { call, put }) {
-            const { data } = yield call(axios.get, GUESS_URL);
+            const {data} = yield call(axios.get, GUESS_URL);
+            // console.log('fetchGuess is running',data,homeModel.namespace);
             yield put({
                 type: 'setState',
                 payload: {
@@ -118,7 +122,6 @@ const homeModel: HomeModel = {
             if (payload && payload.loadMore) {
                 page = pagination.current + 1;
             }
-
 
             const { data } = yield call(axios.get, CHANNEL_URL, {
                 params: {
@@ -144,7 +147,7 @@ const homeModel: HomeModel = {
             })
 
             if (typeof callback === 'function') {
-                console.log('this is Models CallBack!');
+                // console.log('this is Models CallBack!');
                 callback();
             }
         }

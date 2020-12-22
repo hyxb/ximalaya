@@ -1,18 +1,35 @@
+import {RootState} from '@/models/index';
 import React from 'react';
 import {
   HeaderButton,
   HeaderButtons,
   Item,
 } from 'react-navigation-header-buttons';
+import {connect, ConnectedProps} from 'react-redux';
 
-class HeaderRightBtn extends React.Component {
+const mapStateToProps = ({category}: RootState) => {
+  return {
+    isEdit: category.isEdit,
+  };
+};
+
+const connector = connect(mapStateToProps);
+
+type ModelState = ConnectedProps<typeof connector>;
+
+interface IProps extends ModelState {
+  onSubmit: () => void;
+}
+
+class HeaderRightBtn extends React.Component<IProps> {
   render() {
+    const {onSubmit, isEdit} = this.props;
     return (
       <HeaderButtons>
-        <Item title='编辑'/>
+        <Item title={isEdit ? '完成' : '编辑'} onPress={onSubmit} />
       </HeaderButtons>
     );
   }
 }
 
-export default HeaderRightBtn;
+export default connector(HeaderRightBtn);

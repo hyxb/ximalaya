@@ -2,9 +2,10 @@ import storage, { load } from "@/config/storage";
 import Axios from "axios";
 import { Effect, Model, SubscriptionsMapObject } from "dva-core-ts";
 import { Reducer } from 'redux';
+import { RootState } from "@/models/index";
 
 
-const CATEGORY_URL = 'https://yapi.baidu.com/mock/9203/category';
+const CATEGORY_URL = 'https://test.apilab.cn/v1/5fd0425960b22ade4c8e061d/category';
 
 export interface ICategory {
     id: string;
@@ -15,7 +16,7 @@ export interface ICategory {
 interface CategoryModelState {
     myCategorys: ICategory[];
     categorys: ICategory[];
-    IsEdit: boolean;
+    isEdit: boolean;
 }
 
 
@@ -25,7 +26,7 @@ interface CategoryModel extends Model {
     state: CategoryModelState,
     effects: {
         loadData: Effect;
-        toggle: Effect;
+        toggle: Effect; //切换编辑状态，
     };
     reducers: {
         setState: Reducer<CategoryModelState>;
@@ -37,15 +38,15 @@ const initiaState = {
     myCategorys: [
         {
             id: 'home',
-            name: 'tuijian',
+            name: '推荐',
         },
         {
             id: 'vip',
-            name: 'vip',
+            name: 'VIP',
         },
     ],
     categorys: [],
-    IsEdit: false,
+    isEdit: false,
 }
 
 const categoryModel: CategoryModel = {
@@ -74,6 +75,24 @@ const categoryModel: CategoryModel = {
                     }
                 })
             }
+        },
+        *toggle({ payload }, { select, put }) {
+            const category = yield select(({ category }: RootState) => category);
+            /**
+             * toggle可以用来更改编辑按钮的选中状态，并且将myCategorys提交到本地dva仓库
+             * 然后提交到持久化库中，以便下次启动读取数据，
+             */
+            yield put({
+                type: 'setState',
+                payload: {
+                    isEdit: !category.isEdit,
+                    myCategorys: payload.myCategorys,
+                }
+            });
+            storage.save({
+                key: 'myCategorys',
+                data: payload.myCategorys,
+            });
         }
     },
     reducers: {
@@ -88,7 +107,7 @@ const categoryModel: CategoryModel = {
     subscriptions: {
         /**
          * subscriptions中的函数会在dva数据加载完成后执行，执行action
-         * @param param0 
+         * @param param
          */
         setup({ dispatch }) {
             dispatch({ type: 'loadData' });

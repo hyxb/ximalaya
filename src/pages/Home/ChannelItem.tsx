@@ -3,6 +3,7 @@ import {IChannel} from '@/models/home';
 import React from 'react';
 import {View, Image, Text, StyleSheet} from 'react-native';
 import Touchable from '@/components/Touchable';
+
 interface IProps {
   data: IChannel;
   onPress: (data: IChannel) => void;
@@ -17,6 +18,7 @@ class ChannelItem extends React.PureComponent<IProps> {
   };
 
   render() {
+    
     const {data} = this.props;
     return (
       <Touchable style={styles.container} onPress={this.onPress}>

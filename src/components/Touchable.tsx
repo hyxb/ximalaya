@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity, TouchableOpacityProps} from 'react-native';
+import {StyleSheet, TouchableOpacity, TouchableOpacityProps} from 'react-native';
 /**
  * 自定义TouchableOpacityProps组件，
  * 导入TouchableOpacityProps
@@ -7,9 +7,21 @@ import {TouchableOpacity, TouchableOpacityProps} from 'react-native';
  */
 
 
-const Touchable: React.FC<TouchableOpacityProps> = React.memo((props) => (
-  <TouchableOpacity activeOpacity={0.9} {...props} />
-));
 
+ /**
+  * 这里看不懂，要用直接复制就好
+  */
+const Touchable: React.FC<TouchableOpacityProps> = React.memo(
+  ({style,...rest}) => {
+      const touchableStyle = rest.disabled ? [style,styles.disabled] : style;
+      return (
+        <TouchableOpacity style={touchableStyle} activeOpacity={0.8} {...rest} />
+      );
+  },
+);
+const styles = StyleSheet.create({
+  disabled:{
+    opacity:0.5,
+  }
+})
 export default Touchable;
- 

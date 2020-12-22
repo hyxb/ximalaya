@@ -17,18 +17,26 @@ import Carousel, {sideHeight} from '@/pages/Home/Carousel';
 import Guess from './Guess';
 import Config from 'react-native-config';
 import ChannelItem from './ChannelItem';
-import {IChannel} from '@/models/home';
+import {IChannel, IGuess} from '@/models/home';
+import {HomeParamList} from '@/navigator/HomeTabs';
+import {RouteProp} from '@react-navigation/native';
 
 //BUG Config.API_URL is  undefined  ???
-console.log('CONFIG : ' + Config.API_URL);
+// console.log('CONFIG : ' + Config.API_URL);
 
-const mapStateToProps = ({home, loading}: RootState) => {
+const mapStateToProps = (
+  state: RootState,
+  {route}: {route: RouteProp<HomeParamList, string>},
+) => {
+  const {namespace} = route.params;
+  const modelState = state[namespace];
   return {
-    carousels: home.carousels,
-    channels: home.channels,
-    hasMore: home.pagination.hasMore,
-    loading: loading.effects['home/fetchChannel'],
-    gradientVisible: home.gradientVisible,
+    namespace,
+    carousels: modelState.carousels,
+    channels: modelState.channels,
+    hasMore: modelState.pagination.hasMore,
+    loading: state.loading.effects[namespace + '/fetchChannel'],
+    gradientVisible: modelState.gradientVisible,
   };
 };
 
@@ -50,17 +58,23 @@ class Home extends React.Component<IProps, IState> {
   };
 
   componentDidMount() {
-    const {dispatch} = this.props;
+    const {dispatch, namespace} = this.props;
     dispatch({
-      type: 'home/fetchChannel', //type写错下面channels就读不到数据了，不报错也没数据
+      type: namespace + '/fetchChannel', //type写错下面channels就读不到数据了，不报错也没数据
     });
     dispatch({
-      type: 'home/fetchCarousels',
+      type: namespace + '/fetchCarousels',
     });
   }
 
-  onPress = (data: IChannel) => {
-    console.log('index.data:', data);
+  /**
+   * goALbum用于跳转到频道页面，在guess或者Channel都可以使用
+   * @param data 使用|，表明参数可以是IChannel或者IGuess
+   */
+  goAlbum = (data: IChannel | IGuess) => {
+
+    const {navigation} = this.props;
+    navigation.navigate('Album',{item:data});
   };
 
   keyExtractor = (item: IChannel) => {
@@ -68,7 +82,7 @@ class Home extends React.Component<IProps, IState> {
   };
 
   renderItem = ({item}: ListRenderItemInfo<IChannel>) => {
-    return <ChannelItem data={item} onPress={this.onPress} />;
+    return <ChannelItem data={item} onPress={this.goAlbum} />;
   };
   //刷新
   onRefresh = () => {
@@ -77,14 +91,12 @@ class Home extends React.Component<IProps, IState> {
       refreshing: true,
     });
 
-    console.log('onRefresh  start !!! ');
 
     //获取数据
-    const {dispatch} = this.props;
+    const {dispatch, namespace} = this.props;
     dispatch({
-      type: 'home/fetchChannel',
+      type: namespace + '/fetchChannel',
       callback: () => {
-        console.log('CallBack! start');
         this.setState({
           refreshing: false,
         });
@@ -95,13 +107,12 @@ class Home extends React.Component<IProps, IState> {
   };
 
   onEndReached = () => {
-    const {dispatch, loading, hasMore} = this.props;
+    const {dispatch, loading, hasMore, namespace} = this.props;
     if (loading || !hasMore) {
       return;
     }
-    console.log('--loading-more---');
     dispatch({
-      type: 'home/fetchChannel',
+      type: namespace + '/fetchChannel',
       payload: {
         loadMore: true,
       },
@@ -111,10 +122,10 @@ class Home extends React.Component<IProps, IState> {
   onScroll = ({nativeEvent}: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offsetY = nativeEvent.contentOffset.y;
     let newGradientVisible = offsetY < sideHeight;
-    const {dispatch, gradientVisible} = this.props;
+    const {dispatch, gradientVisible, namespace} = this.props;
     if (gradientVisible !== newGradientVisible) {
       dispatch({
-        type: 'home/setState',
+        type: namespace + '/setState',
         payload: {
           gradientVisible: newGradientVisible,
         },
@@ -123,12 +134,13 @@ class Home extends React.Component<IProps, IState> {
   };
 
   get header() {
-    // const {carousels} = this.props;
+    const {namespace} = this.props;
     return (
       <View>
-        <Carousel />
+        <Carousel namespace={namespace} />
         <View style={styles.background}>
-          <Guess />
+          {/* goAlbum传递给Guess组件，使guess也能跳转 */}
+          <Guess namespace={namespace} goAlbum={this.goAlbum}/> 
         </View>
       </View>
     );

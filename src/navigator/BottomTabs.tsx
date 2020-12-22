@@ -51,7 +51,7 @@ function getHeaderTitle(routeName: string) {
   // const routeName = route.state
   //   ? route.state.routes[route.state.index].name
   //   : route.params?.screen || 'HomeTabs';
-  console.log('routeName:' + routeName);
+  // console.log('routeName:' + routeName);
   switch (routeName) {
     case 'HomeTabs':
       return '首页';

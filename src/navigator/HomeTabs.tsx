@@ -6,17 +6,58 @@ import {
   MaterialTopTabBarProps,
   MaterialTopTabBar,
 } from '@react-navigation/material-top-tabs';
-import Home from '@/pages/Home';
+import Home from '@/pages/Home/index';
+import {RootState} from '@/models/index';
+import {connect, ConnectedProps} from 'react-redux';
+import {ICategory} from '@/models/category';
+import {createHomeModel} from '@/config/dva';
+// import { IProps } from 'react-native-linear-animated-gradient-transition';
 
-const Tab = createMaterialTopTabNavigator();
+export type HomeParamList = {
+  [key: string]: {
+    namespace: string;
+  };
+};
 
-class HomeTabs extends React.Component {
+const Tab = createMaterialTopTabNavigator<HomeParamList>();
 
+const mapStateToProps = ({category}: RootState) => {
+  return {
+    myCategorys: category.myCategorys,
+  };
+};
+
+const connector = connect(mapStateToProps);
+
+type ModelState = ConnectedProps<typeof connector>;
+
+interface IProps extends ModelState {}
+
+class HomeTabs extends React.Component<IProps> {
   renderTabBar = (props: MaterialTopTabBarProps) => {
-    return <TopTabBarWrapper {...props}/>;
+    return <TopTabBarWrapper {...props} />;
+  };
+
+  renderScreen = (item: ICategory) => {
+    //动态生成HOMEMODEL
+    // console.log("MyCatager Item Id:",item.id);
+    createHomeModel(item.id);
+
+    return (
+      <Tab.Screen
+        key={item.id}
+        name={item.id}
+        component={Home}
+        options={{tabBarLabel: item.name}}
+        initialParams={{
+          namespace: item.id,
+        }}
+      />
+    );
   };
 
   render() {
+    const {myCategorys} = this.props;
     return (
       <Tab.Navigator
         lazy={true}
@@ -37,13 +78,17 @@ class HomeTabs extends React.Component {
           activeTintColor: '#f86442',
           inactiveTintColor: '#333',
         }}>
+{/* 
         <Tab.Screen
           name="home"
           component={Home}
           options={{tabBarLabel: '推荐'}}
-        />
-      <Tab.Screen name="home1" component={Home} options={{ tabBarLabel:'推荐'}}/>
-      
+          // initialParams={{
+          //   namespace:'test',
+          // }}
+        /> */}
+        {myCategorys.map(this.renderScreen)}
+
         {/* <Tab.Screen name="home1" component={Home} options={{ tabBarLabel:'推荐'}}/>
                 <Tab.Screen name="home2" component={Home} options={{ tabBarLabel:'推荐'}}/>
                 <Tab.Screen name="home3" component={Home} options={{ tabBarLabel:'推荐'}}/> */}
@@ -52,8 +97,8 @@ class HomeTabs extends React.Component {
   }
 }
 
-const styles=StyleSheet.create({
-  sceneContainerStyle:{backgroundColor:'transparent'}
-})
+const styles = StyleSheet.create({
+  sceneContainerStyle: {backgroundColor: 'transparent'},
+});
 
-export default HomeTabs;
+export default connector(HomeTabs);
